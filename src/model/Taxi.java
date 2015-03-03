@@ -3,7 +3,7 @@ package model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import controller.RegNbFormatException;
+import exceptions.RegNbFormatException;
 
 public class Taxi {
 	/** Registration number of the taxi **/
