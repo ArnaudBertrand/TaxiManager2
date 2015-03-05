@@ -83,4 +83,11 @@ public class Taxi implements Comparable<Taxi> {
 	public int compareTo(Taxi other) {
 		return regNb.compareTo(other.regNb);
 	}
+	
+	/**
+	 * ToString method
+	 */
+	public String ToString() {
+		return regNb;
+	}
 }

@@ -22,7 +22,6 @@ public class TaxiList {
 	
 	/**
 	 * Constructor
-	 * @param manager Manager
 	 */
 	public TaxiList(){	
 		this.taxiList = new TreeSet<Taxi>();

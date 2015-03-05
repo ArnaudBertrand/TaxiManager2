@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import model.TaxiList;
 import views.TaxiGUI;
 
@@ -24,8 +26,13 @@ public class TaxiController {
 	// when user sets the number of taxis that they want
 	public class SetListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			int nbTaxis = Integer.parseInt(view.getNbOfSeats());
-			view.setNbTaxis(nbTaxis);
+			int nbTaxis = Integer.parseInt(view.getNbOfTaxis());
+			if(nbTaxis < 27 && nbTaxis > 0) {
+				view.setNbOfTaxis(nbTaxis);
+			}
+			else{
+				JOptionPane.showMessageDialog(null,  "Number of taxis wanted is not between 1 and 26", "Invalid input", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
