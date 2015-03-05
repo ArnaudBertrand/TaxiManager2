@@ -2,14 +2,11 @@ package model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import exceptions.RegNbFormatException;
 
-public class Taxi {
+public class Taxi implements Comparable<Taxi> {
 	/** Registration number of the taxi **/
 	private String regNb;
-	/** Driver name **/
-	private String driverName;
 	/** Number of seat in the taxi **/
 	private int nbOfSeats;
 	/** Regex **/
@@ -23,8 +20,8 @@ public class Taxi {
 	 * @param regNb registration number or the taxi
 	 * @throws RegNbFormatException 
 	 */
-	public Taxi(String driverName, String regNb) throws RegNbFormatException{	
-		if(driverName == null || regNb == null){
+	public Taxi(String regNb, int nbOfSeats) throws RegNbFormatException{	
+		if(nbOfSeats == 0 || regNb == null){
 			throw new NullPointerException(ERROR_NULL_ARGUMENT);
 		}
 		Pattern regex = Pattern.compile(REGEX_REG_NB);
@@ -32,11 +29,8 @@ public class Taxi {
 		if(regNb.length() != 10 || !match.find()){
 			throw new RegNbFormatException(regNb);
 		}
-		this.driverName = driverName;
-		this.regNb = regNb;			
-		
-		//Set default value for nbOfSeats can be handled later in the input file
-		nbOfSeats = 6;
+		this.regNb = regNb;	
+		this.nbOfSeats = nbOfSeats;
 	}
 	
 	/**
@@ -53,22 +47,6 @@ public class Taxi {
 	 */
 	public void setRegNb(String regNb){
 		this.regNb = regNb;
-	}
-	
-	/**
-	 * Get the name of the driver
-	 * @return name of the driver
-	 */
-	public String getDriverName(){
-		return this.driverName;
-	}
-	
-	/**
-	 * Set the name of the driver
-	 * @param driverName name of the driver to set
-	 */
-	public void setDriverName(String driverName){
-		this.driverName = driverName;
 	} 
 
 	/**
@@ -103,6 +81,6 @@ public class Taxi {
 	 * CompareTo method
 	 */
 	public int compareTo(Taxi other) {
-		return driverName.compareTo(other.driverName);
+		return regNb.compareTo(other.regNb);
 	}
 }
