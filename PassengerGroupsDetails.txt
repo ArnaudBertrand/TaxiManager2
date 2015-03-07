@@ -1,5 +1,26 @@
-Scottish Seabird Center, 3
-Edinburgh Castle, 3
-Scotch Whisky Experience, 2
-Ocean Terminal, 1
-Pizza Express, 4
+Edinburgh, 1
+Liverpool, 2
+Cambridge, 3
+Birmingham, 4
+Dover, 5
+Kensington Palace, 5
+Victoria Avenue, 4
+Clissold Park, 3
+Tower of London, 2
+Victoria Park, 1
+Greenford, 1
+Royal Victoria, 2
+Wimbledon, 3
+Camberwell, 4
+Holborn, 5
+Marylebone, 5
+London Bridge, 4
+Old Street, 3
+Saint Giles, 2
+Essex Road, 1
+Finsbury, 1
+Moorgate, 2
+Shadwell, 3
+Cannon Street, 4
+Walworth, 5
+Forest Hill, 5

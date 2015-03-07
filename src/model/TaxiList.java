@@ -2,9 +2,11 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.TreeSet;
+
+import javax.swing.JOptionPane;
 
 import exceptions.RegNbFormatException;
 
@@ -15,7 +17,8 @@ import exceptions.RegNbFormatException;
  */
 public class TaxiList {
 	/** List of taxis **/
-	private TreeSet<Taxi> taxiList = new TreeSet<Taxi>();
+	private ArrayList<Taxi> taxiList;
+	
 	/** Errors **/
 	private static final String ERROR_READING = "Error during reading process: ";
 	private static final String ERROR_NB_ARGUMENTS = "Input line should be 'registration number, nb of seats'";
@@ -24,14 +27,14 @@ public class TaxiList {
 	 * Constructor
 	 */
 	public TaxiList(){	
-		this.taxiList = new TreeSet<Taxi>();
+		this.taxiList = new ArrayList<Taxi>();
 	}
 	
 	/**
 	 * Get the taxi list
 	 * @return the taxi list
 	 */
-	public TreeSet<Taxi> getTaxiList(){
+	public ArrayList<Taxi> getTaxiList(){
 		return this.taxiList;
 	}
 	
@@ -39,7 +42,7 @@ public class TaxiList {
 	 * Set the taxi list
 	 * @param taxiList the taxi list to set
 	 */
-	public void setTaxiList(TreeSet<Taxi> taxiList){
+	public void setTaxiList(ArrayList<Taxi> taxiList){
 		this.taxiList = taxiList;
 	}
 	
@@ -111,15 +114,27 @@ public class TaxiList {
 	 */
 	@SuppressWarnings("resource")
 	public void readFile(String fileName) throws FileNotFoundException{
+		// Set max number of taxi
+		int limit = 0;
+		while(!(limit>0)){
+			try{
+				limit = Integer.parseInt(JOptionPane.showInputDialog("Number of taxi"));				
+			} catch (NumberFormatException e){
+				System.out.println("Please enter a number");
+			}
+		}
+		
+		// Read file
 		File f = new File(fileName);
 		Scanner scanner = new Scanner(f);
 		// Process each line
-		while (scanner.hasNextLine()) {
+		while (scanner.hasNextLine() && limit>0) {
 			//read first line and process it
 			String inputLine = scanner.nextLine(); 
 			if (inputLine.length() != 0) {//ignored if blank line
-				processLine(inputLine);		
-			}	
+				processLine(inputLine);
+			}
+			limit--;
 		}
 	}
 	
@@ -129,12 +144,8 @@ public class TaxiList {
 	 * @return 1 success - 0 fail
 	 */
 	public boolean removeTaxiByRegNb(String regNb){
-		boolean success = false;
 		Taxi taxiToRem = this.getTaxiByRegNb(regNb);
-		if(taxiToRem != null){
-			 success = taxiList.remove(taxiToRem);
-		}
-		return success;
+		return taxiToRem != null ? taxiList.remove(taxiToRem) : false;
 	}
 	
 	/**
@@ -161,7 +172,23 @@ public class TaxiList {
 		}
 		return allTaxis;
 	}
-	
-	
+
+	public Taxi pop() {
+		Taxi t = null;
+		if(taxiList.size() > 0){
+			t = taxiList.get(0);
+			taxiList.remove(0);			
+		}
+		return t;
+	}
+
+	public String getTaxiListByRegNb() {
+		StringBuilder sb = new StringBuilder("");
+		Iterator<Taxi> it = taxiList.iterator();
+		while (it.hasNext()) {
+			sb.append(it.next().toString() + "\n");
+		}
+		return sb.toString();
+	}	
 }
 

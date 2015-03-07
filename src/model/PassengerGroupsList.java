@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class PassengerGroupsList {
 
 	
@@ -33,15 +35,27 @@ public class PassengerGroupsList {
 	 */
 	@SuppressWarnings("resource")
 	public void readFile(String fileName) throws FileNotFoundException {
+		// Set max number of taxi
+		int limit = 0;
+		while(!(limit>0)){
+			try{
+				limit = Integer.parseInt(JOptionPane.showInputDialog("Number of passengers"));				
+			} catch (NumberFormatException e){
+				System.out.println("Please enter a number");
+			}
+		}
+		
+		// Read file
 		File f = new File(fileName);
 		Scanner scanner = new Scanner(f);
 		// Process each line
-		while (scanner.hasNextLine()) {
+		while (scanner.hasNextLine() && limit > 0) {
 			// read first line and process it
 			String inputLine = scanner.nextLine();
 			if (inputLine.length() != 0) {// ignored if blank line
 				processLine(inputLine);
 			}
+			limit--;
 		}
 	}
 
@@ -88,5 +102,26 @@ public class PassengerGroupsList {
 		}
 		return allPG;
 	}
+
+	public PassengerGroup pop() {
+		PassengerGroup pg = null;
+		if(passengerGroupsList.size() > 0){
+			pg = passengerGroupsList.get(0);			
+			passengerGroupsList.remove(0);
+		}
+		return pg;
+	}
+
+	public int getSize() {
+		return passengerGroupsList.size();
+	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder("");
+		Iterator<PassengerGroup> it = passengerGroupsList.iterator();
+		while (it.hasNext()) {
+			sb.append(it.next().toString() + "\n\n");
+		}
+		return sb.toString();
+	}
 }

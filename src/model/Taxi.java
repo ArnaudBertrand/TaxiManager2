@@ -87,7 +87,7 @@ public class Taxi implements Comparable<Taxi> {
 	/**
 	 * ToString method
 	 */
-	public String ToString() {
+	public String toString() {
 		return regNb;
 	}
 }
