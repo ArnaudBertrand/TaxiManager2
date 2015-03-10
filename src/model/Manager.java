@@ -3,6 +3,8 @@ package model;
 import java.io.FileNotFoundException;
 import java.util.Observable;
 
+import main.Log;
+
 public class Manager extends Observable implements Runnable{
 	// Initialise variables
 	private WindowList kioskList;
@@ -10,6 +12,9 @@ public class Manager extends Observable implements Runnable{
 	private TaxiList taxiList;
 	private Thread [] kiosks;
 	private boolean finished;
+	private int speed;
+	private static final int SPEED_MAX = 5;
+	private static final int SPEED_MIN = 1;
 	
 	// Path for input files
 	private static final String PATH_READ_PASSENGERGROUPS_DETAILS = "PassengerGroupsDetails.txt";
@@ -19,6 +24,7 @@ public class Manager extends Observable implements Runnable{
 		passengerGroupsList = new PassengerGroupsList();
 		taxiList = new TaxiList();
 		kioskList = new WindowList();
+		speed = 1;
 		
 		// Create kiosks
 		for (int i = 1; i <= 3; i++) {
@@ -58,7 +64,7 @@ public class Manager extends Observable implements Runnable{
 			notifyObservers();
 	    	clearChanged();
 		} else {
-			finished = true;
+			setFinished(true);
 		}
 		return j;
 	}
@@ -67,7 +73,7 @@ public class Manager extends Observable implements Runnable{
 		return finished;
 	}
 	
-	public WindowList getKioskList() {
+	public WindowList getWindowsList() {
 		return kioskList;
 	}
 
@@ -77,5 +83,25 @@ public class Manager extends Observable implements Runnable{
 
 	public TaxiList getTaxiList() {
 		return taxiList;
+	}
+
+	public void setFinished(boolean b) {
+		this.finished = b;
+		if(b){
+			Log.getInstance().log("Application stopped");
+			Log.getInstance().export("logs.txt");			
+		}
+	}
+	
+	public int increaseSpeed(){
+		return this.speed<SPEED_MAX ? ++this.speed : this.speed;
+	}
+	
+	public int decreaseSpeed(){
+		return this.speed>SPEED_MIN ? --this.speed : this.speed;
+	}
+	
+	public int getSpeed(){
+		return this.speed;
 	}
 }

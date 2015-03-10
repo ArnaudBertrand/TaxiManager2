@@ -1,76 +1,96 @@
 package views;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import model.Journey;
-import model.Window;
 import model.PassengerGroup;
 import model.Taxi;
+import model.Window;
 
 public class WindowGUI extends JPanel implements Observer {
 	/** Serial */
 	private static final long serialVersionUID = 4276444901405177177L;
+	
 	/** Variables **/
-	private JTextField textKioskID;
-	private JTextField textKioskIDValue;
-	private JTextField textDestination;
-	private JTextField textDestinationValue;
-	private JTextField textPassengers;
-	private JTextField textPassengersValue;
-	private JTextField textTaxi;
-	private JTextField textTaxiValue;
 	private Window k;
 	private Journey curJourney;
+	private JTextArea jta;
+	private JButton pauseButton;
+	private JButton resumeButton;
 	
 	public WindowGUI(Window k){
 		this.k = k;
 		k.addObserver(this);
-		setLayout(new GridLayout(4,2));
-		initWindow();
+		
+		initNorth();
+		initCenter();        
 	}
 	
-	private void initWindow(){
-		// Add the taxis list
-		textKioskID = new JTextField("Window");
-		this.add(textKioskID);
-		textKioskIDValue = new JTextField(String.valueOf(k.getKioskID()));
-		this.add(textKioskIDValue);
-		textDestination = new JTextField("Destination");
-		this.add(textDestination);
-		textDestinationValue = new JTextField();
-		this.add(textDestinationValue);
-		textPassengers = new JTextField("Passengers");
-		this.add(textPassengers);
-		textPassengersValue = new JTextField();
-		this.add(textPassengersValue);
-		textTaxi = new JTextField("Taxi");
-		this.add(textTaxi);
-		textTaxiValue = new JTextField();
-		this.add(textTaxiValue);
-		textKioskID.setIgnoreRepaint(true);
-		textKioskIDValue.setIgnoreRepaint(true);
-		textDestination.setIgnoreRepaint(true);
-		textDestinationValue.setIgnoreRepaint(true);
+	private void initNorth(){
+		this.setLayout(new BorderLayout());
+		
+		JPanel pan = new JPanel();
+		pauseButton = new JButton("Pause");
+        pan.add(pauseButton);
+        resumeButton = new JButton("Resume");
+        resumeButton.setEnabled(false);
+        pan.add(resumeButton);
+		
+        this.add(pan, BorderLayout.NORTH);
+	}
+	
+	private void initCenter(){
+		jta = new JTextArea(4,35);
+		jta.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		jta.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+		this.add(jta,BorderLayout.CENTER);
 	}
 	
 	public void update(Observable o, Object arg) {
 		curJourney = k.getCurrentJourney();
 		Taxi t = curJourney.getTaxi();
 		PassengerGroup g = curJourney.getPassengerGroup();
-		
+		StringBuilder sb = new StringBuilder();
+		sb.append("WINDOW " + String.valueOf(k.getKioskID()) + "\n");
 		if(t != null && g != null){
-			textDestinationValue.setText(g.getDestination());
-			textPassengersValue.setText(String.valueOf(g.getNbPeople()));
-			textTaxiValue.setText(t.getRegNb());			
-		} else {
-			textDestinationValue.setText("");
-			textPassengers.setText("");
-			textTaxiValue.setText("");
+			sb.append(String.format("%-20s%-20s", "Destination: ", g.getDestination().trim()) + "\n");
+			sb.append(String.format("%-20s%-20s", "Passengers: ", String.valueOf(g.getNbPeople()).trim()) + "\n");
+			sb.append(String.format("%-20s%-20s", "Taxi: ", t.getRegNb().trim()));
 		}
-	}	
+		jta.setText(sb.toString());
+	}
+	
+    public void addPauseServiceListener(ActionListener al) {
+        pauseButton.addActionListener(al);
+    }
+
+    public void addResumeServiceListener(ActionListener al) {
+        resumeButton.addActionListener(al);
+    }
+    
+	public void enablePauseButton() {
+		pauseButton.setEnabled(true);
+	}
+	
+	public void disablePauseButton() {
+		pauseButton.setEnabled(false);
+	}
+	
+	public void enableResumeButton() {
+		resumeButton.setEnabled(true);
+	}
+
+	public void disableResumeButton() {
+		resumeButton.setEnabled(false);
+	}
 }
