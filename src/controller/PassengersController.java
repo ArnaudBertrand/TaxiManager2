@@ -1,9 +1,10 @@
 package controller;
 
+import generator.PassengerGroupGenerator;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import model.PassengerGroup;
 import model.PassengerGroupsList;
 import views.PassengersGUI;
 
@@ -21,7 +22,7 @@ public class PassengersController {
     {
         public void actionPerformed(ActionEvent e) 
         {
-			pgl.addPassengerGroups(new PassengerGroup("My new destination",5));
+			pgl.addPassengerGroups(PassengerGroupGenerator.getInstance().generate());
         }
     }
 

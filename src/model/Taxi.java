@@ -88,6 +88,6 @@ public class Taxi implements Comparable<Taxi> {
 	 * ToString method
 	 */
 	public String toString() {
-		return regNb;
+		return regNb + ", Nb seats: " + nbOfSeats;
 	}
 }

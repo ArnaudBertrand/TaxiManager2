@@ -1,10 +1,9 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import generator.PassengerGroupGenerator;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -28,13 +27,8 @@ public class PassengerGroupsList {
 
 	/**
 	 * Read a file
-	 * 
-	 * @param fileName
-	 *            path of the file to read
-	 * @throws FileNotFoundException
 	 */
-	@SuppressWarnings("resource")
-	public void readFile(String fileName) throws FileNotFoundException {
+	public void initPassengerGroups() {
 		// Set max number of taxi
 		int limit = 0;
 		while(!(limit>0)){
@@ -45,30 +39,9 @@ public class PassengerGroupsList {
 			}
 		}
 		
-		// Read file
-		File f = new File(fileName);
-		Scanner scanner = new Scanner(f);
-		// Process each line
-		while (scanner.hasNextLine() && limit > 0) {
-			// read first line and process it
-			String inputLine = scanner.nextLine();
-			if (inputLine.length() != 0) {// ignored if blank line
-				processLine(inputLine);
-			}
+		while (limit > 0) {
+			this.addPassengerGroups(PassengerGroupGenerator.getInstance().generate());
 			limit--;
-		}
-	}
-
-	private void processLine(String line) {
-
-		String[] parts = line.split(",");
-		if (parts.length == 2) {
-			String dest = parts[0].trim();
-			int nbPerson = Integer.parseInt(parts[1].trim());
-
-			this.addPassengerGroups(new PassengerGroup(dest, nbPerson));
-		} else {
-			System.out.println("Error nb of arguments PassengerGroups");
 		}
 	}
 
@@ -103,11 +76,14 @@ public class PassengerGroupsList {
 		return allPG;
 	}
 
-	public PassengerGroup pop() {
+	public PassengerGroup pop(int nbSeats) {
 		PassengerGroup pg = null;
-		if(passengerGroupsList.size() > 0){
-			pg = passengerGroupsList.get(0);			
-			passengerGroupsList.remove(0);
+		for(PassengerGroup pgroup : passengerGroupsList){
+			if(pgroup.getNbPeople() <= nbSeats){
+				pg = pgroup;
+				passengerGroupsList.remove(pgroup);
+				break;
+			}
 		}
 		return pg;
 	}

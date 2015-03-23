@@ -1,6 +1,5 @@
 package model;
 
-import java.io.FileNotFoundException;
 import java.util.Observable;
 
 import main.Log;
@@ -16,10 +15,6 @@ public class Manager extends Observable implements Runnable{
 	private static final int SPEED_MAX = 5;
 	private static final int SPEED_MIN = 1;
 	
-	// Path for input files
-	private static final String PATH_READ_PASSENGERGROUPS_DETAILS = "PassengerGroupsDetails.txt";
-	private static final String PATH_READ_TAXIS_DETAILS = "TaxiDetails.txt";
-	
 	public Manager(){
 		passengerGroupsList = new PassengerGroupsList();
 		taxiList = new TaxiList();
@@ -32,14 +27,10 @@ public class Manager extends Observable implements Runnable{
 			kioskList.add(k);
 		}
 		
-		try {
-			// Read the file containing the passenger groups
-			passengerGroupsList.readFile(PATH_READ_PASSENGERGROUPS_DETAILS);
-			taxiList.readFile(PATH_READ_TAXIS_DETAILS);
+		// Init taxis and passenger groups
+		passengerGroupsList.initPassengerGroups();
+		taxiList.initTaxis();
 			
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		}		
 	}
 	
 	public void run(){
@@ -54,17 +45,27 @@ public class Manager extends Observable implements Runnable{
 
 	public synchronized Journey getNewJourney() {
 		Journey j = null;
-		if(taxiList.getNbTaxi() > 0 && passengerGroupsList.getSize() > 0){
-			Taxi newTaxi = taxiList.pop();
-			PassengerGroup newGroup = passengerGroupsList.pop();
-			j = new Journey(newTaxi,newGroup);
-			
-			// Update view display
-			setChanged();
-			notifyObservers();
-	    	clearChanged();
-		} else {
-			setFinished(true);
+		// While we do not have a journey
+		while(j == null && !finished){
+			// Check if we still have taxis and passengers groups, otherwise simulation ends
+			if(taxiList.getNbTaxi() > 0 && passengerGroupsList.getSize() > 0){
+				// Look at the new Taxi in the queue
+				Taxi newTaxi = taxiList.pop();
+				
+				// Get the next
+				PassengerGroup newGroup = passengerGroupsList.pop(newTaxi.getNbOfSeats());
+				// If taxi can take a group associate the journey
+				if(newGroup != null){
+					j = new Journey(newTaxi,newGroup);
+				}
+				
+				// Update view display
+				setChanged();
+				notifyObservers();
+		    	clearChanged();
+			} else {
+				setFinished(true);
+			}			
 		}
 		return j;
 	}

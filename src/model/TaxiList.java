@@ -1,14 +1,11 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import generator.TaxiGenerator;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
-
-import exceptions.RegNbFormatException;
 
 /**
  * Class regrouping taxis into a list
@@ -18,10 +15,6 @@ import exceptions.RegNbFormatException;
 public class TaxiList {
 	/** List of taxis **/
 	private ArrayList<Taxi> taxiList;
-	
-	/** Errors **/
-	private static final String ERROR_READING = "Error during reading process: ";
-	private static final String ERROR_NB_ARGUMENTS = "Input line should be 'registration number, nb of seats'";
 	
 	/**
 	 * Constructor
@@ -83,38 +76,11 @@ public class TaxiList {
 	public boolean addTaxi(Taxi t) {
 		return t != null ? taxiList.add(t) : false;	
 	}
-	
+		
 	/**
-	 * Processes line, extracts data, creates taxi object
-	 * and adds to list.
-	 * @param line the line to be processed
+	 * Init taxis
 	 */
-	private void processLine(String line){
-
-		String [] parts = line.split(",");
-		if(parts.length == 2){
-			String regNb = parts[0].trim();
-			int nbOfSeats = Integer.parseInt(parts[1].trim());
-	
-			try {
-				//create Taxi object and add to the list
-				Taxi t = new Taxi(regNb, nbOfSeats);
-				this.addTaxi(t); 
-			} catch (RegNbFormatException e) {
-				System.out.println(e.getMessage());
-			}
-		} else {
-			System.out.println(ERROR_READING + ERROR_NB_ARGUMENTS);
-		}
-	}
-	
-	/**
-	 * Read a file
-	 * @param fileName path of the file to read
-	 */
-	@SuppressWarnings("resource")
-	public void readFile(String fileName) throws FileNotFoundException{
-		// Set max number of taxi
+	public void initTaxis(){
 		int limit = 0;
 		while(!(limit>0)){
 			try{
@@ -123,17 +89,8 @@ public class TaxiList {
 				System.out.println("Please enter a number");
 			}
 		}
-		
-		// Read file
-		File f = new File(fileName);
-		Scanner scanner = new Scanner(f);
-		// Process each line
-		while (scanner.hasNextLine() && limit>0) {
-			//read first line and process it
-			String inputLine = scanner.nextLine(); 
-			if (inputLine.length() != 0) {//ignored if blank line
-				processLine(inputLine);
-			}
+		while(limit>0){
+			this.addTaxi(TaxiGenerator.getInstance().generate());
 			limit--;
 		}
 	}
