@@ -9,28 +9,41 @@ import javax.swing.JOptionPane;
 
 public class PassengerGroupsList {
 
-	
+	/** Instanciate variables **/
 	private ArrayList<PassengerGroup> passengerGroupsList = new ArrayList<PassengerGroup>();
 
+	/**
+	 * Constructor
+	 * @param passenger group list
+	 * */
 	public PassengerGroupsList() {
 		this.passengerGroupsList = new ArrayList<PassengerGroup>();
 	}
 
+	/**
+	 * Get the passenger group list
+	 * @return passenger group list
+	 * */
 	public ArrayList<PassengerGroup> getPassengerGroupsList() {
 		return this.passengerGroupsList;
 	}
 
+	/**
+	 * set the passenger group list
+	 * @param passenger group list
+	 * */
 	public void setPassengerGroupsList(
 			ArrayList<PassengerGroup> passengerGroupsList) {
 		this.passengerGroupsList = passengerGroupsList;
 	}
 
 	/**
-	 * Read a file
+	 * Initialize the number of passenger groups
 	 */
 	public void initPassengerGroups() {
-		// Set max number of taxi
+		// Set max number of passenger groups
 		int limit = 0;
+		// Ask the number of passenger groups
 		while(!(limit>0)){
 			try{
 				limit = Integer.parseInt(JOptionPane.showInputDialog("Number of passengers"));				
@@ -39,6 +52,7 @@ public class PassengerGroupsList {
 			}
 		}
 		
+		//add the passenger group from the passenger group generator
 		while (limit > 0) {
 			this.addPassengerGroups(PassengerGroupGenerator.getInstance().generate());
 			limit--;
@@ -55,6 +69,10 @@ public class PassengerGroupsList {
 		return pg != null ? passengerGroupsList.add(pg) : false;
 	}
 	
+	/**
+	 * Return all the passenger groups as a string
+	 * @return string of passenger groups
+	 * */
 	public String getAllPassengerGroups(){
 		String allPG = "PASSENGER GROUPS \n";	
 		Iterator<PassengerGroup> i = passengerGroupsList.iterator();
@@ -76,6 +94,9 @@ public class PassengerGroupsList {
 		return allPG;
 	}
 
+	/**
+	 * 
+	 * */
 	public PassengerGroup pop(int nbSeats) {
 		PassengerGroup pg = null;
 		for(PassengerGroup pgroup : passengerGroupsList){
@@ -88,10 +109,18 @@ public class PassengerGroupsList {
 		return pg;
 	}
 
+	/**
+	 * Get the size of the passenger list
+	 * @return size of passenger list
+	 * */
 	public int getSize() {
 		return passengerGroupsList.size();
 	}
 	
+	/**
+	 * Overwrite the method toString
+	 * @return string of passenger list
+	 * */
 	public String toString() {
 		StringBuilder sb = new StringBuilder("");
 		Iterator<PassengerGroup> it = passengerGroupsList.iterator();

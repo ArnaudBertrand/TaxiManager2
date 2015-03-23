@@ -8,15 +8,20 @@ public class Journey {
 	
 	/** Errors **/
 	private final static String ERROR_NULL_TAXI_DEST = "Taxi or destination cannot be null";
-	//private final static String ERROR_NB_PERSON_IN_TAXI = "Number of person in taxi out of bounds: ";
 
+	/**
+	 * Constructor
+	 * 
+	 * @param taxi
+	 * @param Passenger group
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
+	 * */
 	public Journey(Taxi taxi, PassengerGroup group) throws NullPointerException, IllegalArgumentException {
+		//Exception if the taxi or passenger group is null
 		if(taxi == null || group == null){
 			throw new NullPointerException(ERROR_NULL_TAXI_DEST);
 		}
-		//if(nbPerson < 1 || taxi.getNbOfSeats() < nbPerson){
-		//	throw new IllegalArgumentException(ERROR_NB_PERSON_IN_TAXI + nbPerson);
-		//}
 		this.taxi = taxi;
 		this.group = group;
 	}

@@ -5,28 +5,52 @@ public class PassengerGroup {
 	private String destination;
 	private int nbPeople;
 	
+	/**
+	 * Constructor
+	 * @param destination
+	 * @param number of people
+	 * */
 	public PassengerGroup(String destination, int nbPeople) {
 		this.destination = destination;
 		this.nbPeople = nbPeople;
 	}
 
+	/**
+	 * Get the destination
+	 * @return destination
+	 * */
 	public String getDestination() {
 		return destination;
 	}
-
+	
+	/**
+	 * set the destination
+	 * @param destination
+	 * */
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
 
+	/**
+	 * get the number of passenger
+	 * @return nb of people
+	 * */
 	public int getNbPeople() {
 		return nbPeople;
 	}
 
+	/**
+	 * set the number of passenger
+	 * @param number of passenger
+	 * */
 	public void setNbPeople(int nbPeople) {
 		this.nbPeople = nbPeople;
 	}
-
-	//Method toString called by PassengerGUI.createList
+	
+	/**
+	 * Overwrite the method toString
+	 * @return passenger group to string
+	 * */
 	@Override
 	public String toString() {
 		String PG = "";

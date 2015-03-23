@@ -18,6 +18,7 @@ public class TaxiList {
 	
 	/**
 	 * Constructor
+	 * @param taxi list
 	 */
 	public TaxiList(){	
 		this.taxiList = new ArrayList<Taxi>();
@@ -139,6 +140,10 @@ public class TaxiList {
 		return t;
 	}
 
+	/**
+	 * Get taxi list by regulation number
+	 * @return string of taxi list
+	 * */
 	public String getTaxiListByRegNb() {
 		StringBuilder sb = new StringBuilder("");
 		Iterator<Taxi> it = taxiList.iterator();
