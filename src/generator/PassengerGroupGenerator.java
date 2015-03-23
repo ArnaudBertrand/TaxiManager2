@@ -7,28 +7,55 @@ import java.util.Random;
 
 import model.PassengerGroup;
 
+/**
+ * Generate passenger groups
+ */
 public class PassengerGroupGenerator {
+	/** Instance of passenger group generator **/
 	private static PassengerGroupGenerator instance = new PassengerGroupGenerator();
+	/** List of destinations **/
 	private List<String> destList;
 	
+	/**
+	 * Constructor
+	 */
 	private PassengerGroupGenerator (){
+		// Init destinations
 		destList = new ArrayList<String>();
 		initDestinations();
 	}
 	
+	/**
+	 * Get instance of passenger group generator
+	 * @return instance
+	 */
 	public static PassengerGroupGenerator getInstance(){
 		return instance;
 	}
 	
+	/**
+	 * Generate a passenger group
+	 * @return random passenger group
+	 */
 	public synchronized PassengerGroup generate(){
 		return new PassengerGroup(pickRandomDest(),pickRandomPassengerNumber());
 	}
 	
+	/**
+	 * Generate a random destination
+	 * @return a random destination
+	 */
 	private String pickRandomDest(){
+		// Shuffle list
 		Collections.shuffle(destList);
+		// Get the first destination
 		return destList.get(0);
 	}
 	
+	/**
+	 * Generate a random number of passengers
+	 * @return random number of passengers
+	 */
 	private int pickRandomPassengerNumber() {
 	    Random rand = new Random();
 	    // Random passengers between 1 and 6
@@ -36,6 +63,9 @@ public class PassengerGroupGenerator {
 	    return randomNum;
 	}
 	
+	/**
+	 * Init destinations
+	 */
 	private void initDestinations(){
 		destList.add("Edinburgh");
 		destList.add("Liverpool");

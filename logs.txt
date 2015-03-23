@@ -1,13 +1,13 @@
 ##### Report #####
 Starting
-W3: Destination: Holborn              Passengers: 4 Taxi: OXF-FJ2DHO
-W2: Destination: Wimbledon            Passengers: 6 Taxi: MAN-DJ5M7H
-W1: Destination: Royal Victoria       Passengers: 3 Taxi: OXF-B3F303
-W2: Destination: Walworth             Passengers: 1 Taxi: OXF-237B7P
-W3: Destination: Camberwell           Passengers: 6 Taxi: OXF-L5B3DN
-W1: Destination: Palace               Passengers: 6 Taxi: MAN-88PK9J
-W3: Destination: Liverpool            Passengers: 2 Taxi: MAN-K38EGD
-W1: Destination: Kensington           Passengers: 4 Taxi: OXF-2G96LB
-W2: Destination: Cannon Street        Passengers: 5 Taxi: LON-I6N72J
-W3: Destination: Royal Victoria       Passengers: 2 Taxi: LIV-6E0COA
+W1: Destination: Forest Hill          Passengers: 3 Taxi: LIV-LL42PF
+W3: Destination: Birmingham           Passengers: 2 Taxi: LIV-8B81JO
+W2: Destination: Birmingham           Passengers: 6 Taxi: MAN-M4GB31
+W3: Destination: Edinburgh            Passengers: 3 Taxi: MAN-A7OCEN
+W3: Destination: Royal Victoria       Passengers: 3 Taxi: LON-460LGO
+W2: Destination: Marylebone           Passengers: 2 Taxi: MAN-6ND6F6
+W1: Destination: Liverpool            Passengers: 1 Taxi: LON-PC17F6
+W2: Destination: Holborn              Passengers: 4 Taxi: OXF-6JM6DN
+Application stopped
+Application stopped
 Application stopped
