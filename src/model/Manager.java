@@ -87,10 +87,17 @@ public class Manager extends Observable implements Runnable{
 	}
 
 	public void setFinished(boolean b) {
-		this.finished = b;
-		if(b){
-			Log.getInstance().log("Application stopped");
-			Log.getInstance().export("logs.txt");			
+		if(!this.finished){
+			this.finished = b;
+			if(b){
+				Log.getInstance().log("Application stopped");
+				Log.getInstance().export("logs.txt");
+				
+				// Update view display
+				setChanged();
+				notifyObservers();
+		    	clearChanged();
+			}			
 		}
 	}
 	

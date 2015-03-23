@@ -5,10 +5,13 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Manager;
@@ -16,11 +19,12 @@ import model.Window;
 import model.WindowList;
 import controller.WindowController;
 
-public class ManagerGUI extends JFrame {
+public class ManagerGUI extends JFrame implements Observer{
 	/** Serial */
 	private static final long serialVersionUID = -6916776045066988505L;
 	/** Variables **/
 	private WindowList windows;
+	private Manager m;
     private JButton startButton;
     private JButton stopButton;
     
@@ -30,7 +34,9 @@ public class ManagerGUI extends JFrame {
 	private JLabel speedControlValue;
 
 	public ManagerGUI(Manager manager, TaxiGUI tg, PassengersGUI pgView) {
+		m = manager;
 		windows = manager.getWindowsList();
+		manager.addObserver(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
         setLocation(10,20);
@@ -113,6 +119,12 @@ public class ManagerGUI extends JFrame {
 	
 	public void setSpeed(int speed){
 		speedControlValue.setText(String.valueOf(speed));
+	}
+	
+	public void update(Observable o, Object arg) {
+		if(m.isFinished()){
+			JOptionPane.showMessageDialog(this, "Simulation has ended. Thanks for playing with us ;).");			
+		}
 	}
 	
 }
