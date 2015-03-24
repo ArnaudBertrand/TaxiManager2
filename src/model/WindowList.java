@@ -1,17 +1,19 @@
 package model;
 
 import java.util.ArrayList;
-
+/**
+ * Class for window list model
+ */
 public class WindowList{
-	// Init variables
-	private ArrayList<Window> kioskList;
+	/** window list **/
+	private ArrayList<Window> windowList;
 
 	/**
 	 * Constructor
-	 * @param kiosk list
+	 * @param window list
 	 * */
 	public WindowList(){
-		kioskList = new ArrayList<Window>();
+		windowList = new ArrayList<Window>();
 	}
 	
 	/**
@@ -19,32 +21,32 @@ public class WindowList{
 	 * @param window
 	 * */
 	public void add(Window k) {
-		kioskList.add(k);
+		windowList.add(k);
 	}
 	
 	/**
 	 * Find window
-	 * @param id
-	 * @return kiosk
+	 * @param id window id to look for
+	 * @return window matched or null
 	 * */
 	public Window find(int id) {
-		Window kiosk = null;
-		for (Window k : kioskList) {
-			if (k.getKioskID()== id){
-				kiosk = k;
+		Window window = null;
+		for (Window w : windowList) {
+			if (w.getWindowID()== id){
+				window = w;
 				break;
 			}
 		}
-		return kiosk;
+		return window;
 	}
 	
 	/**
 	 * Get the window
-	 * @param i
+	 * @param i index to look
 	 * @return correct window
 	 * */
 	public Window get(int i) {
-		return kioskList.get(i);
+		return windowList.get(i);
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public class WindowList{
 	 * @return size of the window list
 	 * */
 	public int getSize() {
-		return kioskList.size();
+		return windowList.size();
 	}
 	
 }

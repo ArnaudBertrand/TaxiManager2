@@ -1,13 +1,13 @@
-##### Report #####
 Starting
-W1: Destination: Forest Hill          Passengers: 3 Taxi: LIV-LL42PF
-W3: Destination: Birmingham           Passengers: 2 Taxi: LIV-8B81JO
-W2: Destination: Birmingham           Passengers: 6 Taxi: MAN-M4GB31
-W3: Destination: Edinburgh            Passengers: 3 Taxi: MAN-A7OCEN
-W3: Destination: Royal Victoria       Passengers: 3 Taxi: LON-460LGO
-W2: Destination: Marylebone           Passengers: 2 Taxi: MAN-6ND6F6
-W1: Destination: Liverpool            Passengers: 1 Taxi: LON-PC17F6
-W2: Destination: Holborn              Passengers: 4 Taxi: OXF-6JM6DN
-Application stopped
-Application stopped
+W3: Destination: Marylebone           Passengers: 4 Taxi: LIV-JXNA55
+W1: Destination: Birmingham           Passengers: 4 Taxi: LIV-7E3NY6
+W2: Destination: Edinburgh            Passengers: 4 Taxi: MAN-F7GOFL
+W2: Destination: Edinburgh            Passengers: 1 Taxi: OXF-MYSOI7
+W2: Destination: London Bridge        Passengers: 1 Taxi: MAN-YLEB5V
+W1: Destination: Birmingham           Passengers: 4 Taxi: OXF-8SWC3Z
+W3: Destination: Forest Hill          Passengers: 4 Taxi: LIV-HKIUSW
+W2: Destination: Cambridge            Passengers: 2 Taxi: LON-NE7LCM
+W3: Destination: Wimbledon            Passengers: 1 Taxi: MAN-UP0FNX
+W1: Destination: Dover                Passengers: 5 Taxi: OXF-WBFGX8
+W2: Destination: Saint Giles          Passengers: 1 Taxi: LON-FB5ICF
 Application stopped

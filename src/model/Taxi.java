@@ -4,6 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import exceptions.RegNbFormatException;
 
+/**
+ * Class for taxi model
+ */
 public class Taxi implements Comparable<Taxi> {
 	/** Registration number of the taxi **/
 	private String regNb;
@@ -21,14 +24,19 @@ public class Taxi implements Comparable<Taxi> {
 	 * @throws RegNbFormatException 
 	 */
 	public Taxi(String regNb, int nbOfSeats) throws RegNbFormatException{	
+		// Check arguments
 		if(nbOfSeats == 0 || regNb == null){
 			throw new NullPointerException(ERROR_NULL_ARGUMENT);
 		}
+		
+		// Check conformity of the reg number 
 		Pattern regex = Pattern.compile(REGEX_REG_NB);
 		Matcher match = regex.matcher(regNb);
 		if(regNb.length() != 10 || !match.find()){
 			throw new RegNbFormatException(regNb);
 		}
+		
+		// Initiate variables
 		this.regNb = regNb;	
 		this.nbOfSeats = nbOfSeats;
 	}

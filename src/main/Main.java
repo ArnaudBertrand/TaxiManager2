@@ -8,9 +8,14 @@ import controller.ManagerController;
 import controller.PassengersController;
 import controller.TaxiController;
 
-
+/**
+ * Main class
+ */
 public class Main {
-	
+	/**
+	 * Main function
+	 * @param args arguments
+	 */
 	public static void main(String[] args) {
 		// Models
     	Manager manModel = new Manager();

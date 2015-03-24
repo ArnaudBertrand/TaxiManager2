@@ -1,9 +1,13 @@
 package model;
 
+/**
+ * Class model for journey
+ */
 public class Journey {
 
-	/** Instanciate variables **/
+	/** Taxi for journey **/
 	private Taxi taxi;
+	/** Passenger group for journey **/
 	private PassengerGroup group;
 	
 	/** Errors **/
@@ -11,13 +15,11 @@ public class Journey {
 
 	/**
 	 * Constructor
-	 * 
 	 * @param taxi
 	 * @param Passenger group
 	 * @throws NullPointerException 
-	 * @throws IllegalArgumentException 
 	 * */
-	public Journey(Taxi taxi, PassengerGroup group) throws NullPointerException, IllegalArgumentException {
+	public Journey(Taxi taxi, PassengerGroup group) throws NullPointerException {
 		//Exception if the taxi or passenger group is null
 		if(taxi == null || group == null){
 			throw new NullPointerException(ERROR_NULL_TAXI_DEST);

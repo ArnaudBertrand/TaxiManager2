@@ -7,17 +7,21 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Class for passenger group list model
+ */
 public class PassengerGroupsList {
 
 	/** Instanciate variables **/
-	private ArrayList<PassengerGroup> passengerGroupsList = new ArrayList<PassengerGroup>();
-
+	private ArrayList<PassengerGroup> passengerGroupsList;
+	private Manager man;
 	/**
 	 * Constructor
 	 * @param passenger group list
 	 * */
-	public PassengerGroupsList() {
+	public PassengerGroupsList(Manager manager) {
 		this.passengerGroupsList = new ArrayList<PassengerGroup>();
+		this.man = manager;
 	}
 
 	/**
@@ -52,7 +56,7 @@ public class PassengerGroupsList {
 			}
 		}
 		
-		//add the passenger group from the passenger group generator
+		// Add the passenger group from the passenger group generator
 		while (limit > 0) {
 			this.addPassengerGroups(PassengerGroupGenerator.getInstance().generate());
 			limit--;
@@ -61,28 +65,31 @@ public class PassengerGroupsList {
 
 	/**
 	 * Add a new passenger group
-	 * 
-	 * @param pg
-	 *            passenger group to add
+	 * @param pg passenger group to add
 	 */
 	public boolean addPassengerGroups(PassengerGroup pg) {
-		return pg != null ? passengerGroupsList.add(pg) : false;
+		boolean added = pg != null ? passengerGroupsList.add(pg) : false;
+		// Notify views
+		if(added){
+			man.updateViews();
+		}
+		return added;
 	}
 	
 	/**
 	 * Return all the passenger groups as a string
 	 * @return string of passenger groups
-	 * */
+	 */
 	public String getAllPassengerGroups(){
 		String allPG = "PASSENGER GROUPS \n";	
 		Iterator<PassengerGroup> i = passengerGroupsList.iterator();
-		//Go through the arrayList
+		// Go through the arrayList
 		while (i.hasNext()) {
-			//Get current passenger group
+			// Get current passenger group
 			PassengerGroup currentPG = i.next();
-			//Add the destination
+			// Add the destination
 			allPG += currentPG.getDestination() + "\n";
-			//Add the number of people
+			// Add the number of people
 			String nbPeople ="";
 			if (currentPG.getNbPeople() == 1) {
 				nbPeople = "1 person";
@@ -95,10 +102,13 @@ public class PassengerGroupsList {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Pop a passenger group from the list
+	 * @param nbSeats max number of person in the group
+	 * @return first passenger group in the list to match the nb of seat
+	 */
 	public PassengerGroup pop(int nbSeats) {
 		PassengerGroup pg = null;
+		// For each pg group take the first one getting a valid number of people
 		for(PassengerGroup pgroup : passengerGroupsList){
 			if(pgroup.getNbPeople() <= nbSeats){
 				pg = pgroup;

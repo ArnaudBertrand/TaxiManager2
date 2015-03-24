@@ -1,14 +1,18 @@
 package model;
 
+/**
+ * Class for passenger group model
+ */
 public class PassengerGroup {
-	
+	/** Destination of the passenger group **/
 	private String destination;
+	/** Number of people in the passenger group **/
 	private int nbPeople;
 	
 	/**
 	 * Constructor
-	 * @param destination
-	 * @param number of people
+	 * @param destination destination
+	 * @param nbPeople number of people
 	 * */
 	public PassengerGroup(String destination, int nbPeople) {
 		this.destination = destination;
@@ -54,9 +58,9 @@ public class PassengerGroup {
 	@Override
 	public String toString() {
 		String PG = "";
-		//Add the destination
+		// Add the destination
 		PG = destination + "\n";
-		//Add the number of people
+		// Add the number of people
 		String nbPeople ="";
 		if (this.getNbPeople() == 1) {
 			nbPeople = "1 person";

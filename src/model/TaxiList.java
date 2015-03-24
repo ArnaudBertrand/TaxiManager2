@@ -15,13 +15,17 @@ import javax.swing.JOptionPane;
 public class TaxiList {
 	/** List of taxis **/
 	private ArrayList<Taxi> taxiList;
+	/** Manager model **/
+	private Manager man;
 	
 	/**
 	 * Constructor
-	 * @param taxi list
+	 * @param manager 
 	 */
-	public TaxiList(){	
+	public TaxiList(Manager manager){
+		// Initiate variables
 		this.taxiList = new ArrayList<Taxi>();
+		this.man = manager;
 	}
 	
 	/**
@@ -54,7 +58,6 @@ public class TaxiList {
 	 * @return the taxi with the registration number corresponding
 	 */
 	public Taxi getTaxiByRegNb(String regNb){
-		
 		Taxi taxi = null;
 		if(regNb != null){
 			Iterator<Taxi> taxiIterator = taxiList.iterator();
@@ -75,7 +78,12 @@ public class TaxiList {
 	 * @return 1 success - 0 fail
 	 */
 	public boolean addTaxi(Taxi t) {
-		return t != null ? taxiList.add(t) : false;	
+		boolean added = t != null ? taxiList.add(t) : false;
+		// If added notify views
+		if(added){
+			man.updateViews();
+		}
+		return added;
 	}
 		
 	/**
@@ -83,6 +91,7 @@ public class TaxiList {
 	 */
 	public void initTaxis(){
 		int limit = 0;
+		// Ask user to set a number of taxis superior to 0
 		while(!(limit>0)){
 			try{
 				limit = Integer.parseInt(JOptionPane.showInputDialog("Number of taxi"));				
@@ -90,6 +99,7 @@ public class TaxiList {
 				System.out.println("Please enter a number");
 			}
 		}
+		// Create the number of taxi required by the user
 		while(limit>0){
 			this.addTaxi(TaxiGenerator.getInstance().generate());
 			limit--;
@@ -107,32 +117,12 @@ public class TaxiList {
 	}
 	
 	/**
-	 * Get all taxis with the number of passengers that it can carry
-	 * @return all taxis with the number of passengers that it can carry
+	 * Pop a taxi from the list
+	 * @return
 	 */
-	public String getAllTaxis(){
-		String allTaxis = "LIST TAXIS \n";	
-		Iterator<Taxi> i = taxiList.iterator();
-		//Go through the arrayList
-		while (i.hasNext()) {
-			//Get current taxi
-			Taxi currentTaxi = i.next();
-			//Add the registration number
-			allTaxis += currentTaxi.getRegNb() + "\n";
-			//Add the number of passenger that it can carry
-			String nbPassenger ="";
-			if (currentTaxi.getNbOfSeats() == 1) {
-				nbPassenger = "1 person";
-			} else {
-				nbPassenger = currentTaxi.getNbOfSeats() + " people";
-			}
-			allTaxis += nbPassenger + "\n \n";
-		}
-		return allTaxis;
-	}
-
 	public Taxi pop() {
 		Taxi t = null;
+		// If taxi in taxi, take the first one out of the list
 		if(taxiList.size() > 0){
 			t = taxiList.get(0);
 			taxiList.remove(0);			

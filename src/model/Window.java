@@ -4,62 +4,86 @@ import java.util.Observable;
 
 import main.Log;
 
+/**
+ * Class for window model
+ */
 public class Window extends Observable implements Runnable{
-	private int kioskID;
+	/** Id of window **/
+	private int windowId;
+	/** Current journey of the window **/
 	private Journey currentJourney;
+	/** Manager of the window **/
 	private Manager manager;
+	/** If window is paused **/
 	public boolean paused;
 	
 	/**
 	 * Constructor
-	 * @param kiosk id
-	 * @param manager
-	 * @param current journey
-	 * */
-	public Window(int kioskI, Manager manager){
-		this.kioskID = kioskI;
+	 * @param windowId window id
+	 * @param manager manager of window
+	 */
+	public Window(int windowId, Manager manager){
+		// Initiate variables
+		this.windowId = windowId;
 		this.manager = manager;
 		this.currentJourney = null;
 	}
 
 	/**
-	 * Method run
-	 * */
+	 * Method run of window thread
+	 */
 	public void run() {
+		// Stop when manager is finished
 		while (!manager.isFinished()){
-			if(!paused){
-				//Get a new journey
-				currentJourney = manager.getNewJourney();
-				if(currentJourney != null){
-					try {
-						// Log
-						String log = String.format("W" + kioskID + ": Destination: %-20s Passengers: " 
+			try {
+				// Check if window is not paused
+				if(!paused){
+					// Get a new journey
+					currentJourney = manager.getNewJourney();
+					
+					// If we get a new journey
+					if(currentJourney != null){
+						// Log the journey
+						String log = String.format("W" + windowId + ": Destination: %-20s Passengers: " 
 								+ currentJourney.getPassengerGroup().getNbPeople() + " Taxi: %-10s", 
 								currentJourney.getPassengerGroup().getDestination(), currentJourney.getTaxi().getRegNb());
-						
 						Log.getInstance().log(log);
 						
-						//update view display
+						// Update view display
 						setChanged();
 						notifyObservers();
 				    	clearChanged();
-		
-						// Random time to wait according to speed
+						
+						// Pause thread for random time
 						Thread.sleep((long) ((1000/manager.getSpeed())*(5 +Math.random()*5)));				
-					} catch (InterruptedException e) {
-						System.out.println("Kiosk " + kioskID + "  Interrupted");
 					}
-				}				
+				} else {
+					// Update view display
+			    	currentJourney = null;
+					setChanged();
+					notifyObservers();
+			    	clearChanged();
+					// Pause thread
+					Thread.sleep(100);
+				}
+			} catch (InterruptedException e) {
+				System.out.println("Kiosk " + windowId + "  Interrupted");
 			}
 		}
+		
+		// Clear window and update view
+    	currentJourney = null;
+		setChanged();
+		notifyObservers();
+    	clearChanged();
 	}
 
 	/**
-	 * Get the kiosk id
-	 * @return kiosk id
+	 * Get the window id
+	 * @return window id
 	 * */
-	public int getKioskID() {
-		return kioskID;
+	public int getWindowID() {
+		return windowId;
 	}
 	
 	/**
